@@ -1,0 +1,50 @@
+LAB 6: QUESTIONS AND ANSWERS
+
+1. Why do 200 + 100 and 100 + 100 set different flags (C=1, V=0 vs. C=0, V=1)?
+
+Answer:
+
+The Carry flag (C) and Overflow flag (V) indicate two different types of conditions.
+
+Unsigned Carry (C):
+When 200 + 100 is performed, the result is 300. Since an 8-bit unsigned integer can store values only from 0 to 255, the result wraps around to 44 and sets C = 1.
+
+For 100 + 100, the result is 200, which fits within the 8-bit unsigned range. Therefore, C = 0.
+
+Signed Overflow (V):
+In signed 8-bit representation, the valid range is -128 to +127.
+
+For 100 + 100, the mathematical result is +200, which exceeds the maximum value of +127. The resulting bit pattern represents -56, so V = 1.
+
+For 200 + 100, the value 200 is interpreted as -56 in signed 8-bit representation. Therefore, -56 + 100 = 44, which is within the valid signed range. Hence, V = 0.
+
+Thus, the Carry flag indicates unsigned overflow, while the Overflow flag indicates signed overflow.
+
+
+2. How does the ripple-carry adder perform subtraction (a - b) using the exact same adder circuit?
+
+Answer:
+
+When subtract = 1, each bit b_i is inverted (b_i ^ 1 = ~b_i), giving the bitwise complement of b, while cin = 1 is supplied to the least-significant full adder (a + (~b) + 1). This lets the same 8-bit circuit perform addition (subtract = 0, cin = 0) and two's complement subtraction (subtract = 1, cin = 1).
+
+3. In 5 - 7 = 254 (C=0, V=0), why is C = 0 and what does 254 mean?
+
+Answer:
+
+In this adder-subtractor implementation, C = 0 for 5 - 7 = 254 occurs when computing 5 + (~7) + 1 in 8 bits without a carry-out (C = 0), while 254 (11111110) represents -2 in 8-bit two's complement and V = 0 because -2 lies within the signed 8-bit range (-128 to +127).
+
+4. Why is the gate-level adder (257.5 cycles) approximately 18 times slower than the hardware + operator (14.3 cycles)?
+
+Answer:
+
+The gate-level adder is implemented using software instructions that simulate the working of individual logic gates.
+
+It processes the 8 bits one by one using loops and full-adder operations. The carry must propagate from one bit position to the next, which increases the number of instructions and execution time.
+
+On the other hand, the ESP32 processor has a built-in hardware Arithmetic Logic Unit (ALU) that performs addition using optimized processor instructions.
+
+Therefore, the hardware + operator completes the operation much faster than the software-based gate-level adder.
+
+In this experiment, the gate-level adder took approximately 257.5 cycles, while the built-in + operator took only 14.3 cycles, making the gate-level implementation approximately 18 times slower.
+
+This demonstrates the performance difference between software simulation of hardware and direct processor instructions.

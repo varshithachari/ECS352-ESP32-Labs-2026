@@ -1,0 +1,59 @@
+LAB 4: QUESTIONS AND ANSWERS
+
+1. Is the ESP32 big-endian or little-endian? Show the evidence from your table.
+
+Answer:
+
+The ESP32 uses little-endian byte order.
+
+Evidence:
+For the 32-bit integer 0x12345678, the least significant byte (0x78) is stored at the lowest memory address (0x3ffb2100), while the most significant byte (0x12) is stored at the highest address (0x3ffb2103).
+
+Similarly, the float value 1.0 (0x3F800000) stores its bytes as 0x00, 0x00, 0x80 and 0x3F from the lowest to the highest address.
+
+This confirms that the ESP32 stores the least significant byte first, which is called little-endian.
+
+
+2. Why does the string "ABCD" not appear reversed, while the integer does?
+
+Answer:
+
+A string is stored as an array of individual one-byte characters (char), rather than as a single multi-byte number.
+
+Each character occupies one byte. Therefore, 'A' (0x41) is stored at the lowest address, followed by 'B' (0x42), 'C' (0x43) and 'D' (0x44) at consecutive higher addresses.
+
+Endianness affects the byte order within multi-byte values such as integers and floating-point numbers. It does not reverse the order of elements in a character array.
+
+Therefore, the string appears as "ABCD" in memory.
+
+
+3. The ESP32 sends the 4 raw bytes of 0x12345678 over a network to a big-endian computer, which reads them as a 32-bit number. What number does it read?
+
+Answer:
+
+The ESP32 stores the integer 0x12345678 in little-endian order. Therefore, the bytes are transmitted in address order as:
+
+0x78, 0x56, 0x34, 0x12
+
+A big-endian receiver treats the first received byte as the most significant byte. Therefore, it interprets these bytes as:
+
+0x78563412
+
+The decimal equivalent is 2,018,915,346.
+
+Therefore, the receiving computer reads 0x78563412 instead of the original value 0x12345678.
+
+
+4. Why do network protocols agree on one fixed byte order?
+
+Answer:
+
+Different processor architectures may use different byte orders. Some systems use little-endian, while others use big-endian.
+
+If devices used their own byte order while exchanging data, the same multi-byte value could be interpreted differently by the receiving device.
+
+To avoid this problem, network protocols follow a standard byte order called network byte order, which is big-endian.
+
+Functions such as htonl() and ntohl() convert values between the host byte order and network byte order.
+
+This ensures that information such as IP addresses, port numbers and packet lengths is interpreted correctly by different devices, regardless of their processor architecture.

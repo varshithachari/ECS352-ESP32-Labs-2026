@@ -1,0 +1,36 @@
+LAB 12: QUESTIONS AND ANSWERS
+
+1. Why did adding a 25% serial section drop the two-core speed-up from 1.99x down to 1.59x?
+
+Answer:
+
+With a 25% serial part, the measured speedup was 1.59x (243,991 us in Run 1 / 244,019 us in Run 2 vs. 389,088 us / 389,087 us single-core), close to Amdahl's theoretical value of 1.60x (1 / (0.25 + 0.75/2)).
+
+2. Why did the unlocked shared counter lose updates (1,190,150, 1,983,099, 1,993,160) instead of reaching 2,000,000, and why did the result change on every run?
+
+Answer:
+
+Because thread interleaving and timing across Core 0 and Core 1 are not deterministically synchronized without a lock, different runs lose different numbers of increments, producing different totals (1,190,150, 1,983,099, and 1,993,160 instead of 2,000,000).
+
+3. Why did the locked counter produce exactly 2,000,000 every time, yet take approximately 10.4x longer (1,315,962 us vs. 126,208 us)?
+
+Answer:
+
+The critical section utilizes a hardware spinlock (portENTER_CRITICAL / portEXIT_CRITICAL) that enforces mutual exclusion across both CPU cores. Only one core can execute the read-modify-write sequence at any given microsecond, while the competing core spins waiting for the lock.
+
+This completely eliminates race conditions, guaranteeing an exact final count of 2,000,000 across all test runs.
+
+However, acquiring and releasing hardware spinlocks for 2,000,000 individual operations introduces severe bus and lock-contention overhead. Serializing access negates the performance benefits of multi-core execution, resulting in an execution latency of 1,315,962 us (10.4x slower than unsynchronized execution).
+
+
+4. Why did the float sum differ slightly between one core (666967552.00) and two cores (666854656.00)?
+
+Answer:
+
+Floating-point arithmetic is non-associative: (A + B) + C != A + (B + C) due to intermediate finite-precision rounding at each step.
+
+In single-core execution, N = 1,000,000 terms are accumulated in sequence into a single accumulator.
+
+In dual-core execution, Core 0 and Core 1 independently accumulate partial sums of 500,000 terms across separate ranges, which are subsequently added together. Because intermediate magnitudes grow differently in the two halves, the point at which lower-order bits are shifted off and rounded differs between single-core and dual-core partitioning.
+
+This small discrepancy is standard floating-point behavior rather than a hardware error.

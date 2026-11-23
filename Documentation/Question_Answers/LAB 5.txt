@@ -1,0 +1,96 @@
+LAB 5: QUESTIONS AND ANSWERS
+
+1. Draw (using ASCII lines) a 2-input OR gate built from three NAND gates, and verify it against the OR truth table.
+
+Answer:
+
+Circuit Diagram:
+
+          +--------------+
+A ------->| NAND 1 (A, A)|--- ~A ---+
+          | (NOT)        |          |      +--------------------+
+          +--------------+          +----->| NAND 3 (~A, ~B)    |---> Y = A OR B
+                                    +----->| = NOT(~A AND ~B)   |
+          +--------------+          |      +--------------------+
+B ------->| NAND 2 (B, B)|--- ~B ---+
+          | (NOT)        |
+          +--------------+
+
+Using De Morgan's Law:
+
+A OR B = NOT(NOT A AND NOT B)
+
+Truth Table Verification:
+
+A = 0, B = 0:
+NOT A = 1, NOT B = 1
+NAND(1, 1) = 0
+
+A = 0, B = 1:
+NOT A = 1, NOT B = 0
+NAND(1, 0) = 1
+
+A = 1, B = 0:
+NOT A = 0, NOT B = 1
+NAND(0, 1) = 1
+
+A = 1, B = 1:
+NOT A = 0, NOT B = 0
+NAND(0, 0) = 1
+
+The output matches the OR gate truth table in all four cases.
+
+
+2. Why is a NAND gate called a universal gate? What practical benefit does that have when manufacturing a chip?
+
+Answer:
+
+A NAND gate is called a universal gate because any basic logic operation, such as NOT, AND, OR, XOR and NOR, can be constructed using only NAND gates.
+
+This makes NAND gates sufficient to build complex digital circuits without requiring separate types of basic logic gates.
+
+Manufacturing Benefit:
+
+Using NAND gates as building blocks can simplify circuit design and standardize parts of the chip design. It allows manufacturers to reuse optimized circuit structures, which can reduce design complexity, manufacturing cost and development time.
+
+
+3. In loop(), the BOOT button is active-low (pressing it pulls the pin to 0 V), so the code reads !digitalRead(PIN_BTN). What would happen if you removed the !?
+
+Answer:
+
+The BOOT button uses INPUT_PULLUP, which means the pin normally reads HIGH (1) when the button is released and LOW (0) when it is pressed.
+
+The ! operator reverses this reading.
+
+With !:
+- Button released: digitalRead() = 1, so button = 0.
+- Button pressed: digitalRead() = 0, so button = 1.
+
+Without !:
+- Button released: button = 1.
+- Button pressed: button = 0.
+
+Therefore, removing ! would reverse the logical button input. The gate operations would behave differently. For example, an AND(button, clock) operation would respond to the released button instead of the pressed button.
+
+
+4. In XOR(button, clock), holding the button makes the LED blink opposite to when the button is released. Why is an XOR gate sometimes called a controlled inverter?
+
+Answer:
+
+An XOR gate is called a controlled inverter because its output depends on the control input.
+
+Consider the XOR operation with:
+C = Button (control input)
+X = Clock (signal input)
+
+When C = 0:
+XOR(0, X) = X
+The original signal passes through without changing.
+
+When C = 1:
+XOR(1, X) = NOT X
+The signal gets inverted.
+
+Therefore, the XOR gate can either pass the original signal or invert it depending on the control input.
+
+This property is useful in hardware ALUs, especially during two's complement subtraction, where XOR gates are used to conditionally invert bits.

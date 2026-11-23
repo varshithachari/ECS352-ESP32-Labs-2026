@@ -1,0 +1,8 @@
+1. Through this lab, I learned how two cores of the ESP32 can work together to complete a task.
+2. The two-core execution took less time than the single-core execution, showing the benefit of parallel processing.
+3. I understood Amdahl's Law, which explains that the serial part of a program limits the maximum speed-up.
+4. The experiment also showed that two tasks can create problems when they update the same variable at the same time.
+5. The unlocked shared counter gave different totals below 2,000,000 from run to run due to unsynchronized updates.
+6. After using a critical section, the counter reached the correct value because only one task could update it at a time.
+7. However, the locked version took more time because the tasks had to wait while accessing the shared counter.
+8. I learned that parallel programming needs both good performance and proper synchronization to produce reliable results.

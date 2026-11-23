@@ -1,0 +1,15 @@
+1. This experiment helped me understand how the stack is used when a function calls itself repeatedly.
+
+2. I observed that the local variable addresses became smaller with each recursive call, proving that the ESP32 stack grows towards lower memory addresses.
+
+3. The small recursive function required around 48 bytes per call, whereas the big recursive function required around 144 bytes per call.
+
+4. The difference occurred because the big function contained an additional 100-byte local array.
+
+5. The S 50 command completed successfully with 4304 bytes of minimum stack remaining.
+
+6. B 50 reached depth 47 with 32 bytes remaining and then resulted in a reset.
+
+7. This experiment showed me why managing stack memory is important when writing recursive functions for embedded systems.
+
+8. The most surprising part was seeing how adding a local array could significantly increase memory usage and cause the program to crash.

@@ -1,0 +1,34 @@
+ ANSWERS TO LAB 1 QUESTIONS
+
+1. Does the number of cycles in one second match the clock frequency? Explain any small difference.
+
+- Nearly. The ESP32 clock frequency is 240 MHz, which means it should complete approximately 240,000,000 cycles per second.
+- In our experiment, the measured values were 239,907,484, 239,907,496 and 239,907,376 cycles.
+- A small difference occurs because delay(1000) relies on FreeRTOS tick timing rather than acting as a hard real-time cycle timer, and background interrupts or counter-read overhead can add slight variation across runs.
+
+2. The cycle counter is a 32-bit unsigned number. After how many seconds does it wrap around to 0? What does that mean if you time a long piece of code?
+
+- A 32-bit unsigned counter can store values from 0 to 4,294,967,295. After reaching its maximum value, it wraps around to 0.
+- At a clock frequency of 240 MHz:
+
+  Wrap-around time = 2^32 / 240,000,000
+                   = 4,294,967,296 / 240,000,000
+                   = approximately 17.90 seconds.
+
+- If the code runs for longer than 17.90 seconds, the counter may wrap around one or more times. This can produce an incorrect timing result if the wrap-around is not handled properly. For longer measurements, a 64-bit timer such as esp_timer_get_time() is more suitable.
+
+3. A pointer is 4 bytes. What is the largest amount of memory this processor can address?
+
+- A 4-byte pointer contains 32 bits because each byte has 8 bits.
+- Therefore, it can represent 2^32 different address values.
+
+  Address space = 2^32 = 4,294,967,296 bytes = 4 GiB (commonly referred to as 4 GB in casual usage).
+
+- However, this represents the theoretical address space, not the amount of physical RAM available on the ESP32. The address space is divided among different memory regions, including SRAM, Flash, ROM and hardware peripherals.
+
+4. Why is it useful to know that int is 4 bytes here, when it may be a different size on another processor?
+
+- The size of int depends on the processor and compiler. On an Arduino Uno, int is typically 2 bytes, whereas on the ESP32 it is 4 bytes.
+- This also changes the range of values that an int can store. A 2-byte signed int can store values from -32,768 to 32,767, while a 4-byte signed int can store values from -2,147,483,648 to 2,147,483,647.
+- Knowing the size is important when writing embedded programs because it helps prevent unexpected integer overflow and memory-related problems when moving code between different processors.
+- Fixed-width types such as int8_t, int16_t and int32_t are useful when a program requires a specific data size across different platforms.

@@ -1,0 +1,15 @@
+1. Through this experiment, I understood how an 8-bit ripple-carry adder can be constructed using basic logic gates such as AND, OR and XOR, without using the normal addition operator inside the adder implementation.
+
+2. I learned how a half adder calculates the Sum and Carry, while a full adder also considers the carry received from the previous bit to perform multi-bit addition.
+
+3. One important concept I understood was that the same adder circuit can perform subtraction using two's complement by calculating a + NOT(b) + 1, which avoids the need for a separate subtraction circuit.
+
+4. The exhaustive testing verified the implementation against the processor's arithmetic operations for all 65,536 input pairs, and the result showed zero errors for both addition and subtraction.
+
+5. I also understood the difference between Carry and Overflow flags; for example, 200 + 100 produced a carry because the unsigned result exceeded 255, whereas 100 + 100 produced signed overflow because the result exceeded the signed 8-bit maximum of 127.
+
+6. The subtraction example 5 - 7 produced 254 with C = 0 and V = 0, helping me understand that the same 8-bit binary result represents -2 in signed two's complement and indicates an unsigned borrow.
+
+7. The gate-level function adder took 257.5 cycles per addition compared to 14.3 cycles for native +, showing how much faster built-in arithmetic is than function-based gate simulation.
+
+8. Overall, this experiment helped me understand how arithmetic logic circuits are constructed, how processors handle addition and subtraction internally, and why dedicated hardware operations are more efficient than implementing the same logic through software.

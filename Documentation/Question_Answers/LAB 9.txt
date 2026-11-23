@@ -1,0 +1,43 @@
+LAB 9: QUESTIONS AND ANSWERS
+
+1. Does the ESP32 stack grow upward (toward higher addresses) or downward (toward lower addresses)? Show the evidence.
+
+Answer:
+
+The ESP32 stack grows downward, meaning it decrements towards lower memory addresses as call depth increases.
+
+Evidence from recorded hardware addresses:
+In S 10 (recurseSmall):
+- Depth 1:  0x3FFB20BC
+- Depth 2:  0x3FFB208C (48 bytes lower)
+- Depth 10: 0x3FFB1F0C (432 bytes lower)
+
+In B 10 (recurseBig):
+- Depth 1:  0x3FFB2058
+- Depth 2:  0x3FFB1FC8 (144 bytes lower)
+- Depth 10: 0x3FFB1B48 (1296 bytes lower)
+
+Each successive frame is allocated at a numerically lower memory address, proving downward stack growth.
+
+
+2. Why is a recurseBig stack frame (144 bytes) larger than a recurseSmall frame (48 bytes) by 96 bytes even though buffer is 100 bytes?
+
+Answer:
+
+Note that ceil(148 / 16) * 16 = 160, not 144; the measured frame step in our logs was 48 bytes for recurseSmall and 144 bytes for recurseBig (a 96-byte difference when adding the 100-byte local buffer), which reflects compiler frame layout and alignment choices in this build rather than a single formula.
+
+3. Why did S 50 succeed (4304 bytes left) while B 50 crashed right after depth 47 (32 bytes left)?
+
+Answer:
+
+In B 50, the run reset with rst:0x8 TG1WDT_SYS_RESET after reaching depth 47 with 32 bytes of minimum stack remaining reported, consistent with stack exhaustion interfering with normal task execution and triggering a TG1WDT_SYS_RESET watchdog reset.
+
+4. Why does min stack left stay flat for the first several calls in S 50 (5216 bytes) and B 50 (4256 bytes) before decreasing?
+
+Answer:
+
+The FreeRTOS API function uxTaskGetStackHighWaterMark() returns the historical minimum amount of unallocated stack space remaining since task creation, rather than instantaneous free space.
+
+Prior to reaching the recursive depth loops, earlier setup and formatted serial output routines (e.g. Serial.printf()) consumed stack space, establishing an initial high-water mark.
+
+As recursion begins, the high-water mark remains static until cumulative recursive frame depth exceeds the maximum stack usage previously reached by initialization routines. Once this threshold is crossed, the high-water mark begins reporting new decreasing values on every iteration.

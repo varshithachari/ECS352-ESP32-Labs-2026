@@ -1,0 +1,8 @@
+1. In this experiment, I explored parallel computing on the ESP32 by running tasks across both Core 0 and Core 1.
+2. When the square-root summation workload was distributed across both cores, execution time dropped from 389,088 us to 195,665 us, demonstrating an effective dual-core speedup of approximately 1.99x.
+3. Introducing a 25% serial portion limited the overall speedup to 1.59x, which closely matched the theoretical prediction of 1.60x given by Amdahl's Law.
+4. Without a lock, race conditions on the shared counter caused lost updates, giving 1,190,150, 1,983,099, and 1,993,160 across runs instead of 2,000,000.
+5. Enabling a critical-section spinlock ensured atomic increments and consistently yielded exactly 2,000,000 counts across all runs.
+6. However, mutual exclusion introduced substantial overhead, increasing execution time from 126,208 us to 1,315,962 us (a ~10.4x penalty).
+7. I also noted that floating-point sums differed slightly between single-core (666,967,552.00) and two-core (666,854,656.00) runs due to the non-associative nature of IEEE 754 addition.
+8. This lab clearly illustrated that achieving parallelism requires managing synchronization costs and Amdahl bottlenecks.

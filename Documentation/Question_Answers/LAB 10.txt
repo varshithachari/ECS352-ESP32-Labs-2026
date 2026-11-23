@@ -1,0 +1,42 @@
+LAB 10: QUESTIONS AND ANSWERS
+
+1. Why is the gap between two consecutive malloc(1) calls 20 bytes instead of 1 byte, and why does malloc(100) advance by 116 bytes?
+
+Answer:
+
+In this experiment's heap allocator configuration, the observed gaps (20 bytes between malloc(1) calls, 24 bytes for malloc(8), and 116 bytes for malloc(100)) match a 16-byte allocator header plus alignment padding in this specific setup.
+
+2. Why did malloc(24576) (24 KB) FAIL even when free heap was 200,764 bytes?
+
+Answer:
+
+This happens because of external heap fragmentation.
+
+In the experiment, every second 1 KB block was freed. This created several small free memory spaces between allocated blocks.
+
+Although the total free heap memory was 200,764 bytes, the largest available continuous block was only 2,036 bytes.
+
+The malloc() function requires one continuous block of memory for a single allocation.
+
+Since 24,576 bytes could not fit into any available continuous block, the allocation failed.
+
+After all the allocated blocks were freed, the smaller free spaces were combined into larger continuous memory regions.
+
+The largest free block increased to 110,580 bytes, and the 24 KB allocation succeeded.
+
+Therefore, the experiment shows that having enough total free memory does not always guarantee a successful memory allocation. Contiguous memory availability is also important.
+
+
+3. Why did a local variable inside a newly created FreeRTOS task (0x3ffaf7ec) appear inside the heap address region (0x3ffae...–0x3ffb...)?
+
+Answer:
+
+When a new task is created using xTaskCreate(), FreeRTOS dynamically allocates memory for its Task Control Block (TCB) and private stack from the available heap.
+
+The local variables declared inside that task are stored in its private stack.
+
+Since the task stack itself was allocated from the heap, the local variable's address also appears within the general heap address region.
+
+This does not mean that the local variable is directly allocated using malloc(). It means that the memory used for the task's stack originally came from the heap.
+
+Therefore, the experiment demonstrates that the heap and task stacks use the same physical internal DRAM memory on the ESP32, even though they serve different purposes.

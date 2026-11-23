@@ -1,0 +1,15 @@
+Through this experiment, I learned how an 8-bit adder can be designed using basic logic gates without directly using the addition operator inside the adder.
+
+I understood that a half adder produces Sum and Carry outputs, while a full adder also takes the carry from the previous bit into consideration.
+
+I learned that multiple full adders can be connected to form a ripple-carry adder, where the carry moves from one bit position to the next.
+
+I also understood how subtraction can be performed using the same circuit through two's complement by inverting the second input and adding 1.
+
+Our program tested all 65,536 possible input pairs for addition and subtraction and produced zero errors, confirming that the gate-level implementation matched the processor's arithmetic results.
+
+The experiment helped me understand that Carry and Overflow are different flags; Carry indicates an unsigned result exceeding its range, while Overflow indicates that a signed result exceeds its range.
+
+The gate-level adder averaged 257.5 cycles per addition versus 14.3 cycles for + in the benchmark.
+
+Overall, this experiment helped me understand how arithmetic operations are constructed using logic gates and how the processor performs them efficiently through dedicated hardware.

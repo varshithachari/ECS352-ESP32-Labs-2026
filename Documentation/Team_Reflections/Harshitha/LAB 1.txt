@@ -1,0 +1,19 @@
+1. Through this experiment, I learned how to identify the basic hardware specifications of an ESP32 using Arduino IDE.
+
+2. I understood that our ESP32 has two CPU cores and operates at a clock frequency of 240 MHz.
+
+3. I learned that flash memory is used to store program code, whereas heap memory is used for memory allocation during program execution.
+
+4. The experiment helped me understand that different data types require different amounts of memory depending on the processor.
+
+5. The three cycle counts stayed very close to 240 million per second, with minor run-to-run differences.
+
+6. I also learned that pointers are related to memory addresses and help programs access data stored in memory.
+
+7. This experiment connected the Computer Architecture concepts of processor organisation, memory and data representation with an actual ESP32 board.
+
+8. I understood that knowing the hardware specifications is important before developing applications for embedded systems.
+
+9. I realised that the size of variables and available memory can affect how efficiently a program runs on a microcontroller.
+
+10. Overall, this experiment helped me relate the theoretical concepts of Computer Architecture to the actual hardware specifications and behaviour of the ESP32.

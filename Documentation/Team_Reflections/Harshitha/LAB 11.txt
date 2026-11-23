@@ -1,0 +1,8 @@
+1. In this lab, I learned how RAM and Flash memory behave differently when the ESP32 is restarted.
+2. The RAM counter remained at 1 in all three runs because RAM does not retain its values after a reset.
+3. The Flash counter increased from 2 to 3 and 4 because Preferences stores data in non-volatile memory.
+4. RAM writes took around 0–1 microseconds, while Flash writes took approximately 703–704 microseconds.
+5. RAM reads were also faster, taking only 1–2 microseconds compared to 131–132 microseconds for Flash reads.
+6. This experiment showed that RAM is suitable for temporary data, while Flash is useful for information that must survive resets.
+7. Frequent Flash writes should be avoided since they take much longer than RAM writes and wear out Flash endurance over time.
+8. I found it interesting that the Flash counter continued from its previous value even after restarting the board.

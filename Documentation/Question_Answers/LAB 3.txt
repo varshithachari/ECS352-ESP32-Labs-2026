@@ -1,0 +1,39 @@
+LAB 3: QUESTIONS AND ANSWERS
+
+1. Verify the IEEE 754 bit pattern of -2.5 (0xC0200000).
+
+Sign bit: 1 (indicates a negative number).
+Exponent: 10000000 (128). Subtracting the IEEE 754 single-precision bias of 127 gives an actual exponent of 1.
+Mantissa: 01000000000000000000000, which represents 1.25 when the implicit leading 1 is included.
+
+Value:
+(-1)^1 * 2^1 * 1.25 = -2.5
+
+Therefore, the IEEE 754 bit pattern 0xC0200000 correctly represents -2.5.
+
+
+2. Why did adding 0.1 one million times produce 100958.343750 in float instead of 100,000.0, while double produced 100000.00000133?
+
+In binary representation, the decimal fraction 0.1 cannot be represented finitely (it is an infinitely repeating binary fraction: 0.0001100110011...).
+
+A 32-bit float has 23 stored fraction bits and 24 bits of significand precision, including the implicit leading bit. Because of this limited significand precision, each addition incurs a small rounding error. When accumulating 0.1 one million times, these rounding errors accumulate steadily, yielding 100,958.343750 instead of the expected 100,000.0 (an accumulated discrepancy of +958.34).
+
+A 64-bit double has 52 stored fraction bits and 53 bits of significand precision. This expanded significand reduces individual rounding errors by roughly 9 orders of magnitude, allowing the one-million-iteration sum to converge to 100,000.00000133.
+
+Therefore, the experiment illustrates that accumulated rounding error stems directly from limited significand precision during repeated operations.
+
+
+3. Why did 2^24 + 1 as a float remain 16777216.0 (unchanged from 2^24)?
+
+A 32-bit float has 23 stored fraction bits and 24 bits of significand precision (including the implicit leading 1 bit). At 2^24 (16,777,216.0f), the spacing between consecutive representable single-precision floats is 2.0 (the next representable float above 16777216.0f is 16777218.0f). Because consecutive representable values are separated by 2.0 at this magnitude, 16777216.0f + 1.0f cannot be represented as a distinct float and stays at 16777216.0f.
+
+4.
+
+
+4. Why did int32 (11.0 cycles) and float (11.0 cycles) run at almost the same speed, while double (68.3 cycles) took approximately 6.2 times longer?
+
+The ESP32's Xtensa LX6 microarchitecture incorporates a dedicated single-precision hardware Floating-Point Unit (FPU). Consequently, basic single-precision float additions execute natively in hardware with pipelined efficiency comparable to the integer ALU (both requiring ~3.0 net cycles excluding loop overhead).
+
+However, the ESP32 lacks a 64-bit double-precision hardware FPU. All double operations must be emulated entirely in software routines via library functions, executing multiple integer instructions to unpack, align, add, normalize, and repack 64-bit operands.
+
+In our empirical measurement, double addition required 68.3 total cycles (~60.3 net cycles), which is approximately 6.2 times longer than single-precision float addition.

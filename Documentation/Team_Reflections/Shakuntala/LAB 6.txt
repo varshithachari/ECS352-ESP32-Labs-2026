@@ -1,0 +1,15 @@
+1. This experiment helped me understand how binary addition is performed internally using logic gates instead of directly depending on the processor's addition operator.
+
+2. I learned that a half adder uses XOR to calculate the sum and AND to calculate the carry, while a full adder handles two input bits along with an incoming carry.
+
+3. By connecting full adders, we created an 8-bit ripple-carry adder that could perform addition and subtraction using the same basic circuit.
+
+4. I understood that subtraction follows the two's complement method, where the second operand is inverted and an initial carry of 1 is added.
+
+5. The exhaustive testing covered 65,536 input pairs and reported zero errors, which showed that our implementation correctly handled the tested addition and subtraction cases.
+
+6. I also learned why Carry and Overflow must be checked separately, as unsigned arithmetic and signed arithmetic have different value ranges.
+
+7. Simulating addition through gate functions took 257.5 cycles per addition, whereas the + benchmark took 14.3 cycles.
+
+8. This experiment gave me a better understanding of arithmetic logic circuits, binary calculations and the importance of hardware optimisation in computer architecture.

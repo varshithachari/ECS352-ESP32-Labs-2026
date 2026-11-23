@@ -1,0 +1,8 @@
+1. This experiment helped me understand the difference between free heap memory and the largest available continuous memory block.
+2. A malloc(1) call stepped by 20 bytes in this configuration due to allocator bookkeeping and alignment.
+3. The `malloc(100)` allocation advanced by 116 bytes, showing the additional memory used beyond the requested data.
+4. Initially, the ESP32 had 330,196 bytes of free heap and a largest free block of 110,580 bytes.
+5. After filling the heap with 1 KB blocks, the free memory decreased significantly.
+6. Freeing every second block created fragmentation, so the 24 KB allocation failed despite having 200,764 bytes free.
+7. Once all blocks were released, the memory became available as larger continuous blocks, and the allocation succeeded.
+8. I was surprised that a newly created FreeRTOS task gets its own stack from dynamically allocated heap memory.

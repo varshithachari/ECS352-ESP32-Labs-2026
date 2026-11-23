@@ -1,0 +1,15 @@
+1. In this lab, I learned how recursion uses stack memory and how every function call creates a separate stack frame containing its local variables and other call information.
+
+2. By comparing consecutive local variable addresses, I observed that the ESP32 stack grows downward towards lower memory addresses, as shown by the change from `0x3ffb20bc` at depth 1 to `0x3ffb208c` at depth 2 in the S 10 test.
+
+3. I found that each `recurseSmall()` call used approximately 48 bytes of stack space, whereas each `recurseBig()` call used approximately 144 bytes because it contained an additional 100-byte local array with alignment and other frame requirements.
+
+4. During the S 50 test, the program completed all 50 recursive calls successfully, returned the result 1275 and reported 4304 bytes of minimum stack remaining.
+
+5. In B 50, stack space dropped much faster, reaching depth 47 with 32 bytes of minimum stack left before a TG1WDT_SYS_RESET reset occurred.
+
+6. This demonstrated that adding a large local array to every recursive call significantly increases stack consumption and can cause stack exhaustion at much smaller recursion depths.
+
+7. I also learned that `uxTaskGetStackHighWaterMark()` reports the minimum unused stack space recorded by the task, which explains why its value does not necessarily decrease after every individual function call.
+
+8. What surprised me most was that increasing the local memory used by a recursive function from a small variable to a 100-byte array changed a successful 50-level recursion into a crash, showing how important stack management is in embedded systems.

@@ -1,0 +1,15 @@
+1. This lab helped me understand how different program elements are stored in different memory regions of the ESP32.
+
+2. IRAM_ATTR placed fastFunction() in internal instruction RAM at 0x40084248 so it does not rely on external Flash instruction-cache reads.
+
+3. I learned that constant values and string literals are placed in Flash DROM because they do not need to be modified during program execution.
+
+4. The global variables and static variables were stored in internal DRAM, while malloc() allocated memory from the heap and ordinary local variables used the stack.
+
+5. The address of `staticLocal` was `0x3ffbdb60`, which was very close to the global variable address `0x3ffbdb64`, showing that both belong to the data section.
+
+6. I understood that static variables have a longer lifetime than ordinary local variables, so they are not stored in the temporary stack memory.
+
+7. IRAM_ATTR placed fastFunction() in internal instruction RAM at 0x40084248 so it does not rely on external Flash instruction-cache reads.
+
+8. The most interesting part was discovering that the location of a variable in memory depends on its storage type and lifetime, not simply on where it is declared in the code.

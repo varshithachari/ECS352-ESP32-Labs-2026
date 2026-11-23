@@ -1,0 +1,35 @@
+LAB 2: QUESTIONS AND ANSWERS
+
+1. Why do -5 and -1 have 1s in all their upper bits (0xFFFFFFFB and 0xFFFFFFFF)?
+
+Signed integers on the ESP32 use Two's Complement representation. Negative numbers have their most significant bit (sign bit) set to 1. For example, -1 is represented by all 1s (0xFFFFFFFF). To represent -5, we invert the bits of 5 and add 1:
+
+5 = 0x00000005
+Invert = 0xFFFFFFFA
+Add 1 = 0xFFFFFFFB
+
+Therefore, -5 is represented as 0xFFFFFFFB.
+
+
+2. Why did INT32_MAX + 1 become -2147483648 (0x80000000), whereas UINT32_MAX + 1 became 0 (0x00000000)?
+
+Signed integer representation:
+INT32_MAX is 0x7FFFFFFF, which represents 2,147,483,647. Adding 1 produces the bit pattern 0x80000000, which represents -2,147,483,648 in 32-bit Two's Complement representation.
+
+Unsigned integer representation:
+UINT32_MAX is 0xFFFFFFFF, which represents 4,294,967,295. Adding 1 exceeds the 32-bit limit, so the value wraps around to 0x00000000.
+
+Therefore, unsigned integers follow modulo 2^32 wrap-around. Note that signed integer overflow in C/C++ is technically undefined behaviour; the experiment demonstrates the resulting bit pattern using the code's unsigned arithmetic.
+
+
+3. Why did widening int8_t -1 to int32_t produce 0xFFFFFFFF (-1), while widening uint8_t 255 to int32_t produced 0x000000FF (255)?
+
+Both int8_t -1 and uint8_t 255 have the same 8-bit binary pattern (11111111). However, the compiler extends them differently based on their signedness.
+
+Signed integer (int8_t):
+It uses sign extension, which copies the sign bit (1) into the upper 24 bits. Therefore, the resulting 32-bit pattern is 0xFFFFFFFF, representing -1.
+
+Unsigned integer (uint8_t):
+It uses zero extension, which fills the upper 24 bits with zeros. Therefore, the resulting 32-bit pattern is 0x000000FF, representing 255.
+
+Thus, sign extension preserves negative values, while zero extension preserves positive unsigned values.

@@ -1,0 +1,15 @@
+1. In this lab, I understood how an 8-bit ALU performs arithmetic and logical operations such as ADD, SUB, AND, OR, XOR, NOT and SHL, while generating status flags like Zero, Carry, Sign and Overflow.
+
+2. I learned that these flags help the processor identify important conditions in the result, especially the difference between unsigned carry and signed overflow.
+
+3. The shift-and-add multiplication method was tested against normal multiplication for all 65,536 possible 8-bit input pairs and produced zero errors, proving that multiplication can be implemented using simpler operations.
+
+4. The CPU cycle measurements showed that integer operations required approximately 11.0 to 17.1 cycles, while floating-point division required 58.2 cycles in this experiment.
+
+5. Integer / (16.1 cycles) and % (17.1 cycles in the verification table) took more cycles than + and *, and float / (58.2 cycles) took the most cycles among the tested operations.
+
+6. This helped me understand that the ESP32 can perform several integer and floating-point operations efficiently, but the execution cost depends on the type of operation and the processor's implementation.
+
+7. One interesting observation was that dividing negative numbers by 8 and shifting them right by 3 produced different results, such as -17 giving -2 through division and -3 through right shifting, because division truncates towards zero while arithmetic right shifting preserves the sign bit.
+
+8. What surprised me most was that a simple-looking right shift could produce a different result from division, showing why understanding low-level processor operations is important when writing reliable code.

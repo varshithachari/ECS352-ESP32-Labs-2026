@@ -1,0 +1,77 @@
+LAB 7: QUESTIONS AND ANSWERS
+
+1. In ALU with a = 200, b = 100, why is the Sign flag (S = 1) set for OR (236), XOR (172), and SHL (144)?
+
+Answer:
+
+The Sign flag (S) indicates the most significant bit (bit 7) of an 8-bit result.
+
+In an 8-bit register, if the most significant bit is 1, the Sign flag is set to S = 1.
+
+For the given operations:
+
+OR = 236 = 0xEC
+XOR = 172 = 0xAC
+SHL = 144 = 0x90
+
+All three results have their most significant bit set to 1.
+
+Therefore, the Sign flag becomes S = 1 for all three operations.
+
+This flag indicates the sign bit of the result, regardless of whether the value is interpreted as signed or unsigned.
+
+
+2. Compare the cycle cost of int32 *, int32 /, and float /. What does this tell you about the ESP32's hardware execution units?
+
+Answer:
+
+The measured execution times are:
+
+int32 multiplication (*) = 13.0 cycles
+int32 division (/) = 16.1 cycles
+float division (/) = 58.2 cycles
+
+The empty loop baseline is 8.0 cycles.
+
+After subtracting the baseline:
+
+int32 multiplication = 5.0 cycles
+int32 division = 8.1 cycles
+float division = 50.2 cycles
+
+Integer multiplication and division take fewer cycles compared to floating-point division. This shows that integer arithmetic operations are handled efficiently by the ESP32 processor.
+
+Float addition and multiplication took approximately 13.1 cycles, while float division took 58.2 cycles.
+
+This indicates that floating-point division requires more processing than floating-point addition and multiplication in this experiment.
+
+Therefore, the experiment demonstrates that different arithmetic operations have different execution costs depending on the processor's hardware and software implementation.
+
+
+3. Why do x / 8 and x >> 3 give the exact same answer for x = 17 (2) and x = -8 (-1), but differ for x = -17 (-2 vs. -3) and x = -1 (0 vs. -1)?
+
+Answer:
+
+Integer division (/) in C truncates the result towards zero.
+
+For example:
+17 / 8 = 2
+-17 / 8 = -2
+-8 / 8 = -1
+-1 / 8 = 0
+
+An arithmetic right shift (>>) moves the bits towards the right while preserving the sign bit for negative signed values.
+
+For negative numbers, this generally produces a result equivalent to rounding down towards negative infinity on the ESP32.
+
+For example:
+17 >> 3 = 2
+-17 >> 3 = -3
+-8 >> 3 = -1
+-1 >> 3 = -1
+
+Therefore, division and right shifting produce different results for some negative numbers because they follow different rounding rules.
+
+They give the same result for positive numbers and negative numbers that are exact multiples of 8.
+
+This experiment shows why right shifting should not always be used as a replacement for division when working with negative integers.

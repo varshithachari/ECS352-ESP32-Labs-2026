@@ -1,0 +1,27 @@
+LAB 11: QUESTIONS AND ANSWERS
+
+1. Why did the RAM counter reset to 1 on every reset/power cycle, while the Flash counter incremented (2, 3, 4)?
+
+Answer:
+
+RAM (internal DRAM) is volatile semiconductor memory. When the ESP32 undergoes a hardware reset, watchdog reboot, or power cycle, electrical power to the DRAM cells is cut or the memory controller is reinitialized, clearing all SRAM contents. The global variable starts at 0 upon program reboot and increments to 1.
+
+In contrast, Flash memory is non-volatile. The Preferences library writes key-value data directly to the dedicated Non-Volatile Storage (NVS) flash partition. Because floating-gate or charge-trap flash cells retain electron charge without external power, the stored value persists across power interruptions and reboots, allowing the counter to increment monotonically (1 -> 2 -> 3 -> 4).
+
+
+2. Compare the speed of RAM vs. Flash writes and reads (0–1 us vs. 703–704 us write; 1–2 us vs. 131–132 us read). Why is Flash hundreds of times slower?
+
+Answer:
+
+Internal DRAM connects directly to the high-speed CPU bus, allowing 32-bit read and write transactions to complete in single-clock or few-clock cycles (0–1 us write, 1–2 us read).
+
+In contrast, SPI Flash memory is an external chip accessed over a serialized 4-bit SPI bus. A flash write operation requires issuing SPI command opcodes, checking sector status, and performing NVS metadata/wear management in Flash, and programming flash cells, requiring 703–704 us (~700x longer).
+
+Flash reads (131–132 us) require searching the NVS key index in flash tables, which is ~70x slower than direct DRAM memory addressing.
+
+
+3. Why should you never call Preferences.putInt() inside a tight loop running thousands of times per second?
+
+Answer:
+
+Flash sectors have a finite endurance limit (often cited around 10^5 erase/write cycles in general flash datasheets, though exact limits depend on the specific flash part). Writing repeatedly in a fast loop consumes endurance quickly and adds ~703–704 us of Flash write time per write, which can delay time-sensitive tasks.

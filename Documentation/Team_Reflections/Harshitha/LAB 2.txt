@@ -1,0 +1,8 @@
+1. In this experiment, I learned how the ESP32 represents integer values in binary, hexadecimal and decimal formats.
+2. I understood the difference between signed and unsigned integers and how their value ranges differ.
+3. I observed that negative values such as -5 and -1 use two's complement representation.
+4. Each integer type has a fixed range, and going past that limit causes wraparound or overflow behavior depending on whether the type is signed or unsigned.
+5. The output demonstrated that adding 1 to the maximum unsigned 32-bit value results in 0.
+6. I also understood that identical binary patterns can represent different numerical values depending on their data types.
+7. The conversion examples helped me understand how sign extension and zero extension work when changing integer sizes.
+8. This practical activity helped me connect binary arithmetic and data representation concepts with actual ESP32 programming.

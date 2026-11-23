@@ -1,0 +1,10 @@
+1. In this experiment, I learned how to check the hardware details of an ESP32 board using Arduino IDE.
+2. I understood that the ESP32 board used in our experiment has two CPU cores and a clock speed of 240 MHz.
+3. I learned about the difference between flash memory and heap memory and how they are used by the system.
+4. I observed that the ESP32 uses different memory sizes for data types such as int, long, double and pointers.
+5. The CPU cycle readings were approximately 240 million cycles per second, which helped me understand the relationship between clock speed and processor cycles.
+6. Small differences between runs can appear because delay(1000) timing and background system activity are not strictly identical every time.
+7. I understood that pointers store memory addresses and are useful for accessing data in a program.
+8. This experiment helped me understand the basic working specifications of a microcontroller.
+9. I realised that memory capacity, processor speed and data type sizes are important when writing programs for embedded systems.
+10. Overall, I gained practical knowledge of how Computer Architecture concepts are implemented in an ESP32 board.

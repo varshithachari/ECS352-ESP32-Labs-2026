@@ -1,0 +1,8 @@
+1. I understood how the ESP32 uses two cores to perform tasks in parallel.
+2. When the program used both cores, the execution time reduced from around 389,088 microseconds to 195,665 microseconds.
+3. I learned that parallel processing can improve performance, but the improvement depends on how much of the program can run simultaneously.
+4. The experiment with 25% serial work showed that the speed-up was limited to around 1.59 times.
+5. I understood that a race condition occurs when two tasks access and modify the same shared variable without proper synchronization.
+6. Without locking, concurrent updates to the shared counter raced and missed increments, staying below 2,000,000.
+7. Using a critical section lock gave the correct result, but it increased the execution time because the tasks had to wait for each other.
+8. This lab helped me understand that using multiple cores is not enough; proper synchronization is also important for correct results.

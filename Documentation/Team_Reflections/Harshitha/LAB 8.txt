@@ -1,0 +1,15 @@
+1. In this experiment, I learned how the ESP32 organises its memory into different sections such as Flash, IRAM, DRAM, heap and stack.
+
+2. I observed that `normalFunction()` was stored at `0x400ee6d4` in the Flash instruction region, whereas `fastFunction()` was placed at `0x40084248` in internal Instruction RAM.
+
+3. The constant array and string literal were stored in Flash DROM around the `0x3f40xxxx` address range because they contain read-only data.
+
+4. Global variables, static variables, dynamically allocated memory and local variables were located in internal DRAM around the `0x3ffbxxxx–0x3ffcxxxx` address range.
+
+5. I understood that `staticLocal` was stored at `0x3ffbdb60`, close to `globalInitialised` at `0x3ffbdb64`, because static variables retain their values throughout the program execution.
+
+6. Unlike static variables, ordinary local variables are stored on the stack, which was demonstrated by the address `0x3ffb210c`.
+
+7. IRAM_ATTR placed fastFunction() in internal instruction RAM rather than the Flash instruction region.
+
+8. I was surprised that even though `staticLocal` was declared inside the setup function, it was stored alongside global variables instead of on the stack.

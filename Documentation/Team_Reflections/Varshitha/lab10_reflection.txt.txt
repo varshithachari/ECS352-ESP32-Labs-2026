@@ -1,0 +1,8 @@
+1. In this lab, I understood how dynamic memory allocation works on the ESP32 using `malloc()` and how allocated blocks occupy space in the heap.
+2. malloc(1) shifted the allocation address by 20 bytes in this allocator setup because of allocator metadata and alignment overhead.
+3. Similarly, `malloc(100)` advanced the address by 116 bytes, showing that the requested size is not always the total memory consumed.
+4. The allocation addresses increased from `0x3ffb8c60` to `0x3ffb8d14`, demonstrating that these blocks were allocated toward higher addresses.
+5. After allocating 236 blocks of 1 KB, the free heap decreased to 71,268 bytes, and the largest free block became only 1,012 bytes.
+6. Even with 200,764 bytes free after releasing alternate blocks, `malloc(24576)` failed because the available memory was fragmented into smaller blocks.
+7. After freeing all blocks, the largest free block returned to 110,580 bytes, allowing the 24 KB allocation to succeed.
+8. I was surprised to learn that a local variable inside a newly created FreeRTOS task could be located in heap-allocated memory because the task's stack is dynamically allocated.

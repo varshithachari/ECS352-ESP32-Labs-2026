@@ -1,0 +1,15 @@
+1. Through this experiment, I learned how basic logic gates such as AND, OR, NOT, XOR, NAND and NOR work with binary inputs to produce different outputs.
+
+2. I understood that NAND is called a universal gate because other logic gates can be created using only NAND operations, which our experiment verified with zero mismatches.
+
+3. Both De Morgan laws held across all 65,536 combinations of two 8-bit inputs with zero failures.
+
+4. During the hardware experiment, I understood how the ESP32 BOOT button works as an input through GPIO 0 and the onboard LED connected to GPIO 2 works as an output.
+
+5. I observed that the BOOT button reads LOW when pressed because the pin uses INPUT_PULLUP, while the program treats the pressed condition as logical 1.
+
+6. XOR between the button state and the toggling clock signal controlled when the LED was ON or OFF.
+
+7. I found it interesting that logic operations could be used to control an actual LED, helping me understand how software instructions interact with physical hardware.
+
+8. Overall, this experiment helped me connect digital logic gates, Boolean algebra and GPIO operations with practical embedded system applications.

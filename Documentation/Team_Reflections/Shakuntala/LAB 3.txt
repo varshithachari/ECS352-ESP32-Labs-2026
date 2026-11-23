@@ -1,0 +1,15 @@
+1. This experiment helped me understand that floating-point numbers are stored using a specific binary format called IEEE 754. I learned how the sign, exponent and mantissa fields are used to represent a number.
+
+2. By observing the hexadecimal and binary output, I understood that values such as 1.0 and -2.5 have different bit patterns depending on their numerical representation.
+
+3. I learned that decimal numbers like 0.1 cannot be stored with complete accuracy in binary floating-point format. Because of this, repeated calculations can produce a difference between the actual and expected results.
+
+4. In our experiment, adding 0.1 one million times using float produced 100958.34375000, while double produced 100000.00000133. This showed me that double maintains better precision than float.
+
+5. Adding 1.0f to 2^24 did not change the float output because representable floats at 2^24 are spaced 2.0 apart, so unit steps are lost.
+
+6. This helped me understand that floating-point representation has limited precision and that the smallest representable difference depends on the magnitude of the number.
+
+7. I also learned how to compare the performance of different data types using the ESP32 CPU cycle counter. Integer and float additions took around 11 cycles per operation, while double additions took around 68.3 cycles.
+
+8. Overall, I understood that floating-point calculations involve a trade-off between accuracy and execution time. This knowledge is useful when developing embedded applications where both performance and numerical accuracy are important.

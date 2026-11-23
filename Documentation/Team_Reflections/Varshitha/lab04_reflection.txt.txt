@@ -1,0 +1,15 @@
+1. Through this experiment, I understood the concept of endianness, which determines the order in which multiple bytes of a data value are stored in computer memory.
+
+2. By examining the 32-bit hexadecimal value 0x12345678, I observed that the ESP32 stored its bytes as 0x78, 0x56, 0x34 and 0x12 at consecutive memory addresses, confirming Little-Endian byte ordering.
+
+3. I learned that in Little-Endian format, the least significant byte is stored at the lowest memory address, while the most significant byte is stored at the highest address.
+
+4. The same behaviour was observed with the floating-point value 1.0, whose hexadecimal representation 0x3F800000 was stored in memory as 0x00, 0x00, 0x80 and 0x3F.
+
+5. The string "ABCD" stayed in normal order (0x41, 0x42, 0x43, 0x44) across consecutive addresses because it is an array of 1-byte characters rather than a single multi-byte number.
+
+6. This comparison helped me understand that endianness affects the byte arrangement of multi-byte values, including integers and floating-point numbers, rather than reversing the order of individual characters in a string.
+
+7. I realised that understanding byte ordering is important when transferring data between different processors, reading binary files and communicating between hardware devices.
+
+8. Overall, this experiment gave me practical knowledge of memory organisation and helped me understand how the ESP32 stores different types of data at actual memory addresses.

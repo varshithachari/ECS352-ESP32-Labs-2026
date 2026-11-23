@@ -1,0 +1,8 @@
+1. In this experiment, I investigated the concept of endianness to find out how the ESP32 micro-controller arranges multi-byte data types in consecutive memory addresses.
+2. When dumping the 32-bit integer 0x12345678, the byte at the lowest address (0x3ffb2100) was 0x78, followed by 0x56, 0x34, and 0x12 at the highest address (0x3ffb2103).
+3. This confirmed that the ESP32 processor uses Little-Endian byte ordering, where the least significant byte (LSB) is stored first in memory.
+4. Testing with 0xCAFEBABE confirmed the exact same pattern: the byte 0xBE was located at the lowest address, while 0xCA was stored at the highest address.
+5. The IEEE 754 float 1.0 (bit pattern 0x3F800000) also showed little-endian placement, appearing in memory as 0x00, 0x00, 0x80, and 0x3F.
+6. By contrast, "ABCD" appeared in forward byte order (0x41, 0x42, 0x43, 0x44) since each char is stored byte-by-byte in index order.
+7. I learned why network communication protocols standardize on Big-Endian (Network Byte Order): if the ESP32 sends 0x12345678 directly as raw bytes, a Big-Endian computer would misread it as 0x78563412.
+8. This lab helped me understand that software developers must handle byte swapping carefully when designing networking and cross-platform communication software.

@@ -1,0 +1,86 @@
+LAB 8: QUESTIONS AND ANSWERS
+
+1. Draw a clean ASCII memory map from lowest address (0x3f40...) to highest address (0x400e...) showing where each of the 9 items lives.
+
+Answer:
+
+ESP32 MEMORY MAP (ASCENDING ADDRESS ORDER: LOWEST TO HIGHEST)
+
+LOW ADDRESSES (External SPI Flash - Mapped Data)
+------------------------------------------------------------------------
+0x3f4001b3  ---> "hello" string literal
+                 [Flash Read-Only Data (.rodata)]
+
+0x3f408d03  ---> constTable[]
+                 [Flash Read-Only Data (.rodata)]
+
+------------------------------------------------------------------------
+INTERNAL DATA RAM (DRAM) (0x3ffb0000 - 0x3fffffff)
+------------------------------------------------------------------------
+0x3ffb210c  ---> localVariable
+                 [Internal DRAM - Stack (grows downward)]
+
+0x3ffb8c60  ---> heapBlock (malloc)
+                 [Internal DRAM - Dynamic Heap (grows upward)]
+
+0x3ffbdb60  ---> staticLocal
+                 [Internal DRAM - Initialized Data (.data)]
+
+0x3ffbdb64  ---> globalInitialised
+                 [Internal DRAM - Initialized Data (.data)]
+
+0x3ffc1d48  ---> globalUninitialised[100]
+                 [Internal DRAM - Uninitialized BSS (.bss)]
+
+------------------------------------------------------------------------
+INTERNAL INSTRUCTION RAM (IRAM) & FLASH CODE
+------------------------------------------------------------------------
+0x40084248  ---> fastFunction()
+                 [Internal Instruction RAM (.iram1 – avoids dependence on external Flash instruction-cache access)]
+
+0x400ee6d4  ---> normalFunction()
+                 [Flash Instruction Code (.text via I-Cache)]
+------------------------------------------------------------------------
+HIGH ADDRESSES
+
+2. Why are constTable and "hello" placed in 0x3f40... (Flash) instead of 0x3ffb... (SRAM)?
+
+Answer:
+
+The constTable and string literal "hello" contain read-only data that does not need to be modified during program execution.
+
+Therefore, they are placed in external SPI Flash memory, which is mapped into the ESP32 address space starting around 0x3F400000 (.rodata).
+
+This preserves valuable internal SRAM for mutable data that changes during execution, such as global variables, local variables, dynamic heap allocations, and task stacks.
+
+Thus, storing constants in Flash maximizes available SRAM for application execution.
+
+
+3. Why did staticLocal (0x3ffbdb60) land right next to globalInitialised (0x3ffbdb64) instead of near localVariable (0x3ffb210c)?
+
+Answer:
+
+Although staticLocal is scoped syntactically inside setup(), it possesses static storage duration.
+
+This guarantees that its allocated memory persists across the entire lifetime of the firmware application, surviving function invocation exits.
+
+Consequently, the compiler and linker assign it to the .data section of internal DRAM alongside globalInitialised.
+
+In contrast, localVariable is an automatic variable allocated dynamically onto setup()'s call stack frame.
+
+Hence, staticLocal resides contiguously with global data, while localVariable resides in the task stack address range.
+
+
+4. What is the purpose of IRAM_ATTR on fastFunction() (0x40084248 vs. 0x400ee6d4)?
+
+Answer:
+
+IRAM_ATTR instructs the linker to place the function executable code into Internal Instruction RAM (.iram1 – avoids dependence on external Flash instruction-cache access) rather than the default external Flash memory (.text).
+
+Normal functions (like normalFunction() at 0x400EE6D4) reside in Flash ROM and execute via an on-chip instruction cache (I-Cache). Flash read operations involve wait states and can stall if cache misses occur or while SPI flash write/erase cycles are active.
+
+By loading fastFunction() (0x40084248) into on-chip SRAM:
+- It achieves avoids dependence on external Flash instruction-cache access for that function.
+- It executes deterministically even when the SPI Flash cache is disabled during NVS or OTA operations.
+
+This is critical for high-frequency Interrupt Service Routines (ISRs) and time-critical timing loops.

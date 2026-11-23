@@ -1,0 +1,8 @@
+1. In this lab, I understood the difference between volatile RAM and non-volatile Flash memory by testing what happens after resetting the ESP32.
+2. The RAM counter remained at 1 in all three runs because RAM loses its stored values during a reset and the global variable is initialized again.
+3. In contrast, the Flash counter increased from 2 to 3 and then 4 because Preferences stores data permanently in the Flash memory.
+4. I observed that RAM write operations took only 0–1 microseconds, while Flash writes required approximately 703–704 microseconds.
+5. RAM reads took around 1–2 microseconds, whereas Flash reads took 131–132 microseconds.
+6. This showed me that internal RAM is much faster than Flash because Flash storage involves additional operations to access and update persistent data.
+7. Writing to Flash in a tight loop is bad practice because each write takes around 703–704 us and repeated writes wear down finite Flash endurance.
+8. I was surprised that the Flash counter retained its value even after multiple resets while the RAM counter started from 1 every time.

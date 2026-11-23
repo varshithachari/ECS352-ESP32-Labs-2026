@@ -1,0 +1,15 @@
+In this lab, I learned how recursive function calls use stack memory to store local variables and function information.
+
+By observing the memory addresses, I understood that the ESP32 stack grows downward towards lower addresses as recursion depth increases.
+
+The small recursive function used approximately 48 bytes per call, while the big recursive function used approximately 144 bytes because it included an additional 100-byte local array.
+
+During the S 50 test, all 50 recursive calls completed successfully, and the program returned the result 1275 with 4304 bytes of stack remaining.
+
+In B 50, remaining stack dropped quickly to 32 bytes around depth 47 before the board reset.
+
+This showed me that using large local arrays inside recursive functions can consume stack memory quickly.
+
+I also understood that the stack high-water mark helps monitor the minimum unused stack space available during execution.
+
+I was surprised that the big recursive function caused a reset even though the small recursive function completed the same 50 levels successfully.

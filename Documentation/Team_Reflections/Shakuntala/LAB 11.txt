@@ -1,0 +1,8 @@
+1. This experiment helped me understand the difference between temporary and permanent data storage in the ESP32.
+2. The RAM counter started from 1 every time because its value was reset when the board restarted.
+3. The Flash counter retained its previous value and increased to 2, 3 and 4 across the three runs.
+4. I observed that RAM operations were very fast, with write times of 0–1 microseconds and read times of 1–2 microseconds.
+5. Flash operations took longer, with writes around 703–704 microseconds and reads around 131–132 microseconds.
+6. I understood that Flash memory is useful for saving important values that must remain available after a power cycle.
+7. Avoiding frequent Flash writes keeps execution responsive and protects Flash against finite erase/write cycle wear.
+8. I was surprised by how much faster RAM access was compared with Flash access.

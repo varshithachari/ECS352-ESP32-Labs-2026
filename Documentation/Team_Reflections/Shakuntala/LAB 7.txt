@@ -1,0 +1,15 @@
+1. Through this experiment, I understood how an Arithmetic Logic Unit performs different operations using an 8-bit input and selects the required result.
+
+2. I learned the purpose of the Zero, Carry, Sign and Overflow flags and how they help describe the result of arithmetic operations.
+
+3. The shift-and-add multiplication method successfully passed all 65,536 input combinations with zero errors, showing that multiplication can be achieved using shifting and addition.
+
+4. The performance test showed that integer operations required approximately 11.0 to 17.1 CPU cycles, while floating-point division required 58.2 cycles.
+
+5. Floating-point division (58.2 cycles) took many more cycles than floating-point addition or multiplication (13.1 cycles) in the measurements.
+
+6. This helped me understand that the number of CPU cycles depends on the operation and that choosing suitable operations can affect program performance.
+
+7. I found it interesting that -1 divided by 8 gives 0, but shifting -1 right by 3 gives -1 because division truncates towards zero while right shifting keeps the sign bit.
+
+8. Overall, this lab helped me connect arithmetic operations in C++ with how the processor executes them at a lower level.

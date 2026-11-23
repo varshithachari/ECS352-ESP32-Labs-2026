@@ -1,0 +1,8 @@
+1. This experiment demonstrated how multi-byte numbers and strings are stored at the physical byte level in the ESP32 memory space.
+2. By reading memory one byte at a time using pointer casting, I observed that the least significant byte of 0x12345678 was stored at the lowest address (0x78), proving the ESP32 is Little-Endian.
+3. When we tested 0xCAFEBABE, the memory dump showed 0xBE, 0xBA, 0xFE, and 0xCA in ascending address order, further verifying the hardware's little-endian architecture.
+4. For the single-precision float 1.0f (0x3F800000), the four bytes appeared in memory as 0x00, 0x00, 0x80, and 0x3F, proving that floating-point data types follow the same endian rules as integers.
+5. Unlike the multi-byte numbers, "ABCD" was stored in sequential order (0x41, 0x42, 0x43, 0x44) because each character is a 1-byte array element.
+6. I understood that if an ESP32 sends raw memory bytes over a network to a big-endian server without conversion, the receiving machine will interpret 0x12345678 as 0x78563412 (2,018,915,346 in decimal).
+7. This clearly showed why networking standards mandate Big-Endian order, requiring functions like htonl() and ntohl() to ensure correct data exchange across heterogeneous systems.
+8. I found it fascinating to see how the processor hardware actually organizes primitive data types at individual memory locations.

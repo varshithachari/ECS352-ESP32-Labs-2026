@@ -1,0 +1,15 @@
+1. In this lab, I learned how an 8-bit ALU performs arithmetic and logical operations such as addition, subtraction, AND, OR, XOR, NOT and left shift.
+
+2. I understood how the four status flags Zero, Carry, Sign and Overflow indicate different conditions of the ALU result.
+
+3. The shift-and-add multiplication method was tested for all 65,536 possible input pairs and produced zero errors compared with normal multiplication.
+
+4. From the CPU cycle measurements, I observed that integer operations took around 11.0 to 17.1 cycles, whereas floating-point division took 58.2 cycles.
+
+5. This showed me that different operations have different execution costs and that division generally requires more processing than simple addition or shifting.
+
+6. Different integer and floating-point operations showed noticeably different cycle counts depending on the operation tested.
+
+7. An interesting result was that -17 divided by 8 produced -2, while shifting it right by 3 produced -3 because integer division truncates towards zero.
+
+8. This experiment helped me understand how processor operations, status flags and execution time are connected to the performance of a computer.

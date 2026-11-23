@@ -1,0 +1,10 @@
+1. Through this experiment, I learned how 32-bit integers are stored and represented in binary form inside a computer.
+2. I understood that signed 32-bit integers can store both positive and negative values, ranging from -2,147,483,648 to 2,147,483,647.
+3. I observed how negative numbers such as -5 and -1 are represented using the two's complement method.
+4. I saw how adding 1 to INT32_MAX produces the bit pattern 0x80000000 (INT32_MIN), showing why signed overflow is dangerous in C/C++.
+5. I also learned that an unsigned 32-bit integer can store values up to 4,294,967,295, and adding 1 to this maximum value produces 0.
+6. I understood that signed and unsigned data types can interpret the same binary pattern differently.
+7. By converting int8_t -1 into int32_t, I observed sign extension, where the sign bit is extended to the larger data type.
+8. Similarly, converting uint8_t 255 into int32_t demonstrated zero extension, where the extra bits are filled with zeros.
+9. The conversion of int8_t -1 into uint32_t showed how a negative value can become 4,294,967,295 when interpreted as an unsigned integer.
+10. Overall, this experiment helped me understand binary representation, integer limits, overflow and type conversion through practical execution on the ESP32.

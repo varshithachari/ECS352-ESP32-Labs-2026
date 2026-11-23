@@ -1,0 +1,19 @@
+1. I understood that before developing an application using a microcontroller, it is important to understand its hardware specifications, capabilities and limitations.
+
+2. Our ESP32 uses an ESP32-D0WD-V3 processor with two CPU cores operating at 240 MHz, which helped me understand processor organisation and clock frequency in an actual device.
+
+3. I learned the difference between flash memory and heap memory. Our board reported 4,194,304 bytes of flash memory and 331,796 bytes of free heap, showing that program storage and runtime memory serve different purposes.
+
+4. I understood that different programming data types occupy different amounts of memory. On our ESP32, int and long use 4 bytes, whereas double uses 8 bytes.
+
+5. This experiment helped me understand that data-type sizes depend on the processor architecture, which is important when transferring programs between different microcontrollers.
+
+6. By measuring CPU cycles three times, I observed values close to 239.9 million cycles per second, compared with the specified 240 MHz clock frequency.
+
+7. I noticed slight differences across the three one-second cycle readings, which can happen due to how delay timing interacts with background tasks and interrupts.
+
+8. I also learned that a 4-byte pointer represents a 32-bit address width, helping me understand memory addressing and the processor's memory map.
+
+9. From a practical engineering perspective, understanding these specifications helps developers select suitable hardware, manage memory efficiently and develop reliable embedded applications.
+
+10. Overall, this experiment connected theoretical Computer Architecture concepts such as processor organisation, memory management, data representation and clock cycles with the actual behaviour of an ESP32.

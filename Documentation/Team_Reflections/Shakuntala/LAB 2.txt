@@ -1,0 +1,8 @@
+1. Through this experiment, I learned how integers are represented using binary numbers in a computer.
+2. I understood that a signed 32-bit integer can store both positive and negative values within a fixed range.
+3. I learned that negative numbers are represented using the two's complement method.
+4. Adding 1 to INT32_MAX moved the bit pattern to 0x80000000, which corresponds to INT32_MIN in two's complement.
+5. I also understood that unsigned integers have a different range and that UINT32_MAX + 1 produces 0.
+6. The experiment showed me that the same binary bits can have different meanings depending on whether the data type is signed or unsigned.
+7. I learned about sign extension and zero extension when converting 8-bit values into 32-bit integers.
+8. Overall, this experiment helped me understand integer representation, overflow and data type conversion through practical ESP32 output.

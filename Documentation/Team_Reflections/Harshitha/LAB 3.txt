@@ -1,0 +1,15 @@
+1. Through this experiment, I learned how the IEEE 754 standard is used to represent floating-point numbers. A 32-bit float contains 1 sign bit, 8 exponent bits and 23 mantissa bits.
+
+2. I understood that the computer stores decimal values in binary form, and some values such as 0.1 cannot be represented exactly. This is one of the reasons floating-point calculations can produce rounding errors.
+
+3. When we added 0.1 one million times, the float result was 100958.34375000, while the expected result was 100000.00000000. This helped me understand how small errors can accumulate during repeated calculations.
+
+4. I observed that double produced a much more accurate result of 100000.00000133 compared with float. This demonstrated the advantage of using higher precision for calculations.
+
+5. Adding 1.0f to 16777216.0f (2^24) left the value unchanged because the step size between representable float values at 2^24 is 2.0.
+
+6. I understood that the distance between representable floating-point numbers increases as their magnitude increases, making some small changes impossible to represent.
+
+7. By comparing CPU cycles, I observed that integer and float additions required approximately 11 cycles per operation, whereas double additions required approximately 68.3 cycles.
+
+8. What interested me most was that double provided better accuracy but required more processing time. This experiment helped me understand the importance of balancing precision and performance when selecting data types for embedded systems.
